@@ -19,6 +19,8 @@ jobs:
       - uses: tree-sitter/setup-action@v2
         with:
           install-lib: false
+      - name: Install NPM dependencies
+        run: npm install --legacy-peer-deps
       - name: Generate grammar
         run: tree-sitter generate
       - name: Build grammar

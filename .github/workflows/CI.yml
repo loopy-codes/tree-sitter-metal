@@ -21,3 +21,5 @@ jobs:
           install-lib: false
       - name: Generate grammar
         run: tree-sitter generate
+      - name: Build grammar
+        run: tree-sitter build

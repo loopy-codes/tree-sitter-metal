@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "metal",
+      "camelcase": "Metal",
+      "title": "Metal",
+      "scope": "source.metal",
+      "file-types": [
+        "metal"
+      ],
+      "injection-regex": "^metal$",
+      "class-name": "TreeSitterMetal"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.0",
+    "license": "MIT",
+    "description": "A Tree Sitter Grammar for Apple's Metal Shading Language.",
+    "authors": [
+      {
+        "name": "Joseph D. Carpinelli",
+        "email": "joey@loopy.codes",
+        "url": "https://loopy.codes/"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/loopy-codes/tree-sitter-metal",
+      "funding": "https://github.com/sponsors/loopy-codes"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

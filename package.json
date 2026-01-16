@@ -1,0 +1,54 @@
+{
+  "name": "tree-sitter-metal",
+  "version": "0.0.0",
+  "description": "A Tree Sitter Grammar for Apple's Metal Shading Language.",
+  "repository": "https://github.com/loopy-codes/tree-sitter-metal",
+  "funding": "https://github.com/sponsors/loopy-codes",
+  "license": "MIT",
+  "author": {
+    "name": "Joseph D. Carpinelli",
+    "email": "joey@loopy.codes",
+    "url": "https://loopy.codes/"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "metal"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "^0.22.4",
+    "tree-sitter-cli": "^0.25.9"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.22.4"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
+  }
+}

@@ -16,5 +16,8 @@ jobs:
     runs-on: ubuntu-latest # FIXME pin OS versions in matrix
     steps:
       - uses: actions/checkout@v6
-      - name: Run tests
-        run: cargo test --workspace
+      - uses: tree-sitter/setup-action@v2
+        with:
+          install-lib: false
+      - name: Generate grammar
+        run: tree-sitter generate

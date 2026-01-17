@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-metal"
 description = "A Tree Sitter Grammar for Apple's Metal Shading Language."
-version = "0.0.0"
+version = "0.0.1"
 authors = ["Joseph D. Carpinelli <joey@loopy.codes>"]
 license = "MIT"
 readme = "README.md"

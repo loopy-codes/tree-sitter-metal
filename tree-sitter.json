@@ -14,7 +14,7 @@
     }
   ],
   "metadata": {
-    "version": "0.0.0",
+    "version": "0.0.1",
     "license": "MIT",
     "description": "A Tree Sitter Grammar for Apple's Metal Shading Language.",
     "authors": [

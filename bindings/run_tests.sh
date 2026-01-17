@@ -31,17 +31,18 @@ run_test() {
 
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
 
-    echo -n "Running $name tests... "
+    echo "Running $name tests..."
 
     if eval "$command" > /tmp/test_output_$$ 2>&1; then
-        echo -e "${GREEN}PASSED${NC}"
+        echo -e "${GREEN}✓ $name tests PASSED${NC}"
         PASSED_TESTS=$((PASSED_TESTS + 1))
+        rm -f /tmp/test_output_$$
         return 0
     else
-        echo -e "${RED}FAILED${NC}"
+        echo -e "${RED}✗ $name tests FAILED${NC}"
         FAILED_TESTS=$((FAILED_TESTS + 1))
-        echo "  Error output:"
-        cat /tmp/test_output_$$ | head -20 | sed 's/^/    /'
+        echo "Error output:"
+        cat /tmp/test_output_$$ | head -30 | sed 's/^/  /'
         rm -f /tmp/test_output_$$
         return 1
     fi
@@ -54,7 +55,7 @@ skip_test() {
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     SKIPPED_TESTS=$((SKIPPED_TESTS + 1))
 
-    echo -e "${YELLOW}SKIPPED${NC} $name tests: $reason"
+    echo -e "${YELLOW}⊘ $name tests SKIPPED: $reason${NC}"
 }
 
 # Check and run Rust tests

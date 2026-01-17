@@ -12,8 +12,8 @@ permissions:
 
 jobs:
   tests:
-    name: Tests
-    runs-on: ubuntu-latest # FIXME pin OS versions in matrix
+    name: Build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: tree-sitter/setup-action@v2
@@ -25,3 +25,163 @@ jobs:
         run: tree-sitter generate
       - name: Build grammar
         run: tree-sitter build
+
+  rust-tests:
+    name: Rust Binding Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for relevant changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            rust:
+              - 'bindings/rust/**'
+              - 'src/**'
+              - 'Cargo.toml'
+              - 'grammar.js'
+
+      - name: Setup Rust
+        if: steps.changes.outputs.rust == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Run Rust tests
+        if: steps.changes.outputs.rust == 'true' || github.event_name == 'workflow_dispatch'
+        run: cargo test --lib
+
+  go-tests:
+    name: Go Binding Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for relevant changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            go:
+              - 'bindings/go/**'
+              - 'src/**'
+              - 'grammar.js'
+
+      - name: Setup Go
+        if: steps.changes.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Run Go tests
+        if: steps.changes.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        working-directory: bindings/go
+        run: go test -v
+
+  node-tests:
+    name: Node.js Binding Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for relevant changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            node:
+              - 'bindings/node/**'
+              - 'src/**'
+              - 'grammar.js'
+              - 'binding.gyp'
+              - 'package.json'
+
+      - name: Setup Node.js
+        if: steps.changes.outputs.node == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install NPM dependencies
+        if: steps.changes.outputs.node == 'true' || github.event_name == 'workflow_dispatch'
+        run: npm install --legacy-peer-deps
+
+      - name: Build Node.js binding
+        if: steps.changes.outputs.node == 'true' || github.event_name == 'workflow_dispatch'
+        run: npx node-gyp rebuild
+
+      - name: Run Node.js tests
+        if: steps.changes.outputs.node == 'true' || github.event_name == 'workflow_dispatch'
+        run: npm test
+
+  python-tests:
+    name: Python Binding Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for relevant changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            python:
+              - 'bindings/python/**'
+              - 'src/**'
+              - 'grammar.js'
+              - 'pyproject.toml'
+              - 'setup.py'
+
+      - name: Install uv
+        if: steps.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch'
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        if: steps.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch'
+        run: uv python install 3.12
+
+      - name: Install Python package and dependencies
+        if: steps.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch'
+        run: uv pip install --system -e .
+
+      - name: Run Python tests
+        if: steps.changes.outputs.python == 'true' || github.event_name == 'workflow_dispatch'
+        run: uv run python -m unittest discover -s bindings/python/tests -v
+
+  swift-tests:
+    name: Swift Binding Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for relevant changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            swift:
+              - 'bindings/swift/**'
+              - 'src/**'
+              - 'grammar.js'
+              - 'Package.swift'
+
+      - name: Run Swift tests
+        if: steps.changes.outputs.swift == 'true' || github.event_name == 'workflow_dispatch'
+        run: swift run TreeSitterMetalTests

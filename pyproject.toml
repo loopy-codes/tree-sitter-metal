@@ -17,6 +17,9 @@ authors = [{ name = "Joseph D. Carpinelli", email = "joey@loopy.codes" }]
 requires-python = ">=3.10"
 license.text = "MIT"
 readme = "README.md"
+dependencies = [
+    "tree-sitter>=0.25.2",
+]
 
 [project.urls]
 Homepage = "https://github.com/loopy-codes/tree-sitter-metal"

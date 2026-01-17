@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 
 import Foundation
 import PackageDescription
@@ -12,9 +12,12 @@ let package = Package(
     name: "TreeSitterMetal",
     products: [
         .library(name: "TreeSitterMetal", targets: ["TreeSitterMetal"]),
+        .executable(name: "TreeSitterMetalTests", targets: ["TreeSitterMetalTests"]),
     ],
     dependencies: [
-        .package(name: "SwiftTreeSitter", url: "https://github.com/tree-sitter/swift-tree-sitter", from: "0.9.0"),
+        .package(
+            name: "SwiftTreeSitter", url: "https://github.com/tree-sitter/swift-tree-sitter",
+            from: "0.9.0")
     ],
     targets: [
         .target(
@@ -28,14 +31,14 @@ let package = Package(
             publicHeadersPath: "bindings/swift",
             cSettings: [.headerSearchPath("src")]
         ),
-        .testTarget(
+        .executableTarget(
             name: "TreeSitterMetalTests",
             dependencies: [
                 "SwiftTreeSitter",
                 "TreeSitterMetal",
             ],
             path: "bindings/swift/TreeSitterMetalTests"
-        )
+        ),
     ],
     cLanguageStandard: .c11
 )

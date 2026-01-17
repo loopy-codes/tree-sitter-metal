@@ -41,6 +41,8 @@ pub const NODE_TYPES: &str = include_str!("../../src/node-types.json");
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn test_can_load_grammar() {
         let mut parser = tree_sitter::Parser::new();

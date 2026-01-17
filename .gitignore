@@ -16,6 +16,7 @@ Package.resolved
 _obj/
 
 # Python artifacts
+__pycache__/
 .venv/
 dist/
 *.egg-info
@@ -48,3 +49,4 @@ zig-out/
 *.tar.gz
 *.tgz
 *.zip
+

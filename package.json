@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-metal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A Tree Sitter Grammar for Apple's Metal Shading Language.",
   "repository": "https://github.com/loopy-codes/tree-sitter-metal",
   "funding": "https://github.com/sponsors/loopy-codes",

@@ -1,5 +1,7 @@
 # `tree-sitter-metal`
 
+[![CI](https://github.com/loopy-codes/tree-sitter-metal/actions/workflows/CI.yml/badge.svg)](https://github.com/loopy-codes/tree-sitter-metal/actions/workflows/CI.yml)
+
 *An experimental Tree Sitter Grammar for Apple's Metal Shading Language.*
 
 > [!NOTE]
